@@ -3,33 +3,40 @@ package com.ligiaviana.tennisplayers.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_player")
-public class Player implements Serializable {
+@Table(name = "tb_racket")
+public class Racket implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String description;
 	
-	@OneToOne(mappedBy = "player", cascade = CascadeType.ALL)
-	private Racket racket;
+	@JsonIgnore
+	@OneToOne
+	@MapsId
+	private Player player;
 	
-	public Player() {
+	public Racket() {
 	}
 
-	public Player(Long id, String name) {
+	public Racket(Long id, String name, String description, Player player) {
 		this.id = id;
 		this.name = name;
+		this.description = description;
+		this.player = player;
 	}
 
 	public Long getId() {
@@ -47,15 +54,23 @@ public class Player implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Racket getRacket() {
-		return racket;
+
+	public String getDescription() {
+		return description;
 	}
 
-	public void setRacket(Racket racket) {
-		this.racket = racket;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -69,8 +84,7 @@ public class Player implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Player other = (Player) obj;
+		Racket other = (Racket) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }
