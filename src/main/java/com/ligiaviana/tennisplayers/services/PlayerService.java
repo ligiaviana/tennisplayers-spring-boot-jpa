@@ -27,4 +27,8 @@ public class PlayerService {
 	public Player insert(Player obj) {
 		return repository.save(obj);
 	}
+	
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
 }
