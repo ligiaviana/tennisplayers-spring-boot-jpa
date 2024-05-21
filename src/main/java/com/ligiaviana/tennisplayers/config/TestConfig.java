@@ -37,5 +37,4 @@ public class TestConfig implements CommandLineRunner {
 		
 		playerRepository.saveAll(Arrays.asList(p1, p2, p3));
 	} 
-
 }

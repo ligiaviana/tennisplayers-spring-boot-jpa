@@ -23,5 +23,8 @@ public class PlayerService {
 		Optional<Player> obj = repository.findById(id);
 		return obj.get();
 	}
-
+	
+	public Player insert(Player obj) {
+		return repository.save(obj);
+	}
 }
