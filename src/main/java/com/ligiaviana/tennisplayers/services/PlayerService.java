@@ -13,6 +13,8 @@ import com.ligiaviana.tennisplayers.repositories.PlayerRepository;
 import com.ligiaviana.tennisplayers.services.exceptions.DatabaseException;
 import com.ligiaviana.tennisplayers.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class PlayerService {
 	
@@ -44,9 +46,13 @@ public class PlayerService {
 	}
 	
 	public Player update(Long id, Player obj) {
-		Player entity = repository.getReferenceById(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			Player entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	private void updateData(Player entity, Player obj) {
