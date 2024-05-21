@@ -31,4 +31,14 @@ public class PlayerService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+	
+	public Player update(Long id, Player obj) {
+		Player entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+
+	private void updateData(Player entity, Player obj) {
+		entity.setName(obj.getName());
+	}
 }
