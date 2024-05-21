@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ligiaviana.tennisplayers.entities.Player;
 import com.ligiaviana.tennisplayers.repositories.PlayerRepository;
+import com.ligiaviana.tennisplayers.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class PlayerService {
@@ -21,7 +22,7 @@ public class PlayerService {
 	
 	public Player findById(Long id) {
 		Optional<Player> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Player insert(Player obj) {
